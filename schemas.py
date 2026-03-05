@@ -13,12 +13,12 @@ NullableInt = Annotated[int, BeforeValidator(none_to_zero)]
 
 
 class LakeEnum(str, Enum):
-    HU = "Huron"
-    SU = "Superior"
-    ON = "Ontario"
-    SC = "St. Clair"
-    ER = "Erie"
-    MI = "Michigan"
+    HU = "Lake Huron"
+    SU = "Lake Superior"
+    ON = "Lake Ontario"
+    SC = "Lake St. Clair"
+    ER = "Lake Erie"
+    MI = "Lake Michigan"
 
 
 class WeightTypeEnum(str, Enum):

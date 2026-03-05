@@ -1,0 +1,59 @@
+* Lamprey Schema
+
+This repository contains a minimal working example that is intended to
+demonstrate how Pydantic could be used to validate the data contained
+in a GLFC Lamprey data submission.  It contains basic validators for
+both Gear and BioData tables.
+
+Currently, the script fetches the data from the specified access
+database. Any validation errors are accumulated in an array that is
+reported at the end of the script.
+
+This is a minimal, proof of concept.  Additional improvements include
+updates to the validator, tests, more meaningful error reports, and a better
+user interface (either as a desktop application or a web based
+service).
+
+** Installation
+
+Create and activate python virtual environment:
+
+#+begin_src bash
+
+  mkvirtualenv lamprey_schema
+  workon lamprey_schema
+
+#+end_src
+
+Install the required packages:
+
+#+begin_src bash
+
+  pip install -r requirements.txt
+
+#+end_src
+
+
+Update the SRC_DB variable in the validate_data.py script to point to
+a populated Lamprey Submission Template on your computer (currenyly
+only accdb are supported).  Save the file, and then run the python
+script in a terminal:
+
+
+#+begin_src bash
+
+  python validate_data.py
+
+#+end_src
+
+When the validation is complete, the script will report the number of
+records processed and the elapsed time:
+
+[[file:images/ValidationSuccess.png][Screenshot of Validitions Success]]
+
+If there are any validation errors, the number of invalid rows will be
+reported along the first several records including the error reports
+and the data payload that generated them:
+
+
+[[file:images/ValidationError.png][Screenshot of Validation Error]]

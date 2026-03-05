@@ -9,7 +9,7 @@ from schemas import BioData, Gear
 
 start_time = time.perf_counter()
 
-SRC_DB = "C:/Users/COTTRILLAD/Documents/1work/Python/LampreySchema/glis_GLFC_lamprey/Lamprey_data_HU-2023.accdb"
+SRC_DB = "C:/Users/COTTRILLAD/Documents/1work/R/sandbox/glis_glfc_lamprey/Lamprey_data_HU-2023.accdb"
 
 # SRC_DB = "C:/Users/COTTRILLAD/Documents/1work/R/sandbox/glis_glfc_lamprey/Lamprey_data_HU-1991.accdb"
 
