@@ -49,11 +49,11 @@ script in a terminal:
 When the validation is complete, the script will report the number of
 records processed and the elapsed time:
 
-[[file:images/ValidationSuccess.png][Screenshot of Validitions Success]]
+#+html: <p align="center"><img src="images/ValidationSuccess.png" /></p>
 
 If there are any validation errors, the number of invalid rows will be
 reported along the first several records including the error reports
 and the data payload that generated them:
 
 
-[[file:images/ValidationError.png][Screenshot of Validation Error]]
+#+html: <p align="center"><img src="images/ValidationError.png" /></p>
