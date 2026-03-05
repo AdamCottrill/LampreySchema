@@ -24,7 +24,7 @@ gear_raw = get_gear_accdb(SRC_DB)
 gear = validate(gear_raw, Gear)
 
 
-print(f"Valididating data in: {p.name}")
+print(f"Validating data in: {p.name}")
 
 gear_raw = get_gear_accdb(SRC_DB)
 gear = validate(gear_raw, Gear)
