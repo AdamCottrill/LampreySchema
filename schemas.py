@@ -1,6 +1,6 @@
 from typing import Annotated, Optional, Union
 from enum import Enum
-from pydantic import BaseModel, Field, BeforeValidator
+from pydantic import BaseModel, Field, BeforeValidator, AliasChoices
 
 
 def none_to_zero(v: Optional[int]) -> int:
@@ -46,7 +46,7 @@ class MeshMaterialEnum(str, Enum):
 
 class Gear(BaseModel):
 
-    liftid: str = Field(alias="LiftID")
+    liftid: str = Field(validation_alias=AliasChoices("LIFTID", "LiftID"))
     lake: LakeEnum = Field(alias="Lake")
     agency: str = Field(alias="Agency")
 
@@ -75,6 +75,7 @@ class Gear(BaseModel):
     net_material: Optional[MeshMaterialEnum] = Field(alias="NetMaterial")
     min_mesh: Optional[int] = Field(alias="MinMesh(mm)")
     max_mesh: Optional[int] = Field(alias="MaxMesh(mm)")
+    comments: Optional[str] = Field(alias="Comments", default="")
 
 
 class BioData(BaseModel):
@@ -88,12 +89,12 @@ class BioData(BaseModel):
     # Field Names:
 
     # lift id must exist
-    liftid: str = Field(alias="LIFTID")
+    liftid: str = Field(validation_alias=AliasChoices("LIFTID", "LiftID"))
     lake: str = Field(alias="Lake")
 
     # agency could be an enum too:
     agency: str = Field(alias="Agency")
-    fishid: str = Field(alias="FISHID")
+    fishid: str = Field(validation_alias=AliasChoices("FISHID", "FishID"))
     mesh_size: Optional[int] = Field(alias="MeshSize(mm)")
     species_name: str = Field(alias="SpeciesName")
     species_number: int = Field(alias="SpeciesNumber")
@@ -107,7 +108,7 @@ class BioData(BaseModel):
     age_structure: Optional[str] = Field(alias="AgeStructure")
     sex: Optional[SexEnum] = Field(alias="SexAgency")
     maturity: Optional[MaturityEnum] = Field(alias="MaturityAgency")
-    finclip: Optional[str] = Field(alias="FinClipAgency")
+    finclip: Optional[str] = Field(alias="FinClipAgency", coerce_numbers_to_str=True)
     # wound counds shouls all be gte=0
     a1_a3: NullableInt = Field(default=0, alias="A1-A3")
     a1: NullableInt = Field(default=0, alias="A1")
@@ -118,4 +119,4 @@ class BioData(BaseModel):
     b2: NullableInt = Field(default=0, alias="B2")
     b3: NullableInt = Field(default=0, alias="B3")
     b4: NullableInt = Field(default=0, alias="B4")
-    comments: Optional[str] = Field(alias="Comments")
+    comments: Optional[str] = Field(alias="Comments", coerce_numbers_to_str=True)

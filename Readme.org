@@ -6,12 +6,12 @@ in a GLFC Lamprey data submission.  It contains basic validators for
 both Gear and BioData tables.
 
 Currently, the script fetches the data from the specified access
-database. Any validation errors are accumulated in an array that is
-reported at the end of the script.
+database (*.accdb) or excel template (*.xlsx). Any validation errors
+are accumulated in an array that is reported at the end of the script.
 
 This is a minimal, proof of concept.  Additional improvements include
-updates to the validator, tests, more meaningful error reports, and a better
-user interface (either as a desktop application or a web based
+updates to the validator, tests, more meaningful error reports, and a
+better user interface (either as a desktop application or a web based
 service).
 
 ** Installation
@@ -34,17 +34,17 @@ Install the required packages:
 #+end_src
 
 
-Update the SRC_DB variable in the validate_data.py script to point to
-a populated Lamprey Submission Template on your computer (currenyly
-only accdb are supported).  Save the file, and then run the python
-script in a terminal:
+And then run the python script in a terminal:
 
 
 #+begin_src bash
 
-  python validate_data.py
+  python validate_data.py -s <YOUR-SOURCE-FILE>
 
 #+end_src
+
+Where <YOUR-SOURCE-FILE> is the path to your populated MSExcel or
+MSAccess template.
 
 When the validation is complete, the script will report the number of
 records processed and the elapsed time:

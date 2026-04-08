@@ -1,3 +1,13 @@
+"""
+
+useage:
+
+python valiadate.py -s "Lamprey_data_HU-2023.accdb"
+python valiadate.py -s "Lamprey_data_HU-2023.xlxs"
+
+"""
+
+import argparse
 import sys
 import time
 from pathlib import Path
@@ -5,29 +15,39 @@ from pathlib import Path
 from rich import print as rprint
 
 from db_utils import get_fish_accdb, get_gear_accdb, validate
+from xlsx_utils import get_xlsx_data
 from schemas import BioData, Gear
 
 start_time = time.perf_counter()
 
-SRC_DB = "C:/Users/COTTRILLAD/Documents/1work/R/sandbox/glis_glfc_lamprey/Lamprey_data_HU-2023.accdb"
+parser = argparse.ArgumentParser()
+parser.add_argument("-s", "--src_file", help="data source file. Either accdb or xlsx")
+args = parser.parse_args()
 
-# SRC_DB = "C:/Users/COTTRILLAD/Documents/1work/R/sandbox/glis_glfc_lamprey/Lamprey_data_HU-1991.accdb"
+if args.src_file:
+    SRC = args.src_file
+else:
+    sys.exit("a 'src_file' must be provided using the '-s' argument")
 
-p = Path(SRC_DB)
+allowed_extensions = {".xlsx", ".accdb"}
 
-if not p.is_file():
-    msg = f"Unable to find {p}.\n Please verify that the file exists."
+file_path = Path(SRC)
+
+if file_path.suffix.lower() not in allowed_extensions:
+    sys.exit("'src_file' must be a valid MSAccess or MSExcel file.")
+
+if not file_path.is_file():
+    msg = f"Unable to find {file_path}.\n Please verify that the file exists."
     sys.exit(msg)
 
+print(f"Validating data in: {file_path.name}")
 
-gear_raw = get_gear_accdb(SRC_DB)
-gear = validate(gear_raw, Gear)
+if SRC.endswith("xlsx"):
+    gear_in = get_xlsx_data(SRC, "Gear")
+else:
+    gear_in = get_gear_accdb(SRC)
 
-
-print(f"Validating data in: {p.name}")
-
-gear_raw = get_gear_accdb(SRC_DB)
-gear = validate(gear_raw, Gear)
+gear = validate(gear_in, Gear)
 
 print(f"{len(gear.get('data'))} gear records successfully validated")
 
@@ -39,8 +59,11 @@ if gear_errors:
         rprint(item)
 
 
-fish_raw = get_fish_accdb(SRC_DB)
-fish = validate(fish_raw, BioData)
+if SRC.endswith("xlsx"):
+    fish_in = get_xlsx_data(SRC, "Biodata")
+else:
+    fish_in = get_fish_accdb(SRC)
+fish = validate(fish_in, BioData)
 
 print(f"{len(fish['data'])} fish records successfully validated")
 
