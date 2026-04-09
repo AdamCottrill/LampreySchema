@@ -1,5 +1,19 @@
 import pyodbc
 
+from collections import Counter
+
+
+def duplicate_check(ids):
+    # return any id values that appear more than once
+    counts = Counter(ids)
+    duplicates = [item for item, count in counts.items() if count > 1]
+    return duplicates
+
+
+def orphan_check(gear_ids, fish_gear_ids):
+    # return any fis_ids, that don't have a gear
+    return set(fish_gear_ids) - set(gear_ids)
+
 
 def get_accdb_connection(accdb):
     """
@@ -93,14 +107,6 @@ def get_fish_accdb(accdb: str):
         FROM FISH;
     """
     return execute_select(accdb, sql)
-
-
-def get_gear_xlsx(xlsx: str):
-    pass
-
-
-def get_fis_xlsx(xlsx: str):
-    pass
 
 
 def validate(data_in, schema):
